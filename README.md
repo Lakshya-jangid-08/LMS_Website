@@ -42,7 +42,7 @@ A feature-rich **Learning Management System (LMS)** built using the **MERN stack
 ## 🔧 Installation  
 1. **Clone the repository**  
    ```bash  
-   git clone https://github.com/yourusername/lms.git  
+   git clone https://github.com/Lakshya-jangid-08/LMS_Website.git
    cd lms  
    ```
 
