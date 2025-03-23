@@ -12,9 +12,9 @@ function Home() {
       < Hero />
       < Companies />
       <CourseSection />
-      <TestimonialsSection/>
-      <CallToAction/>
-      <Footer/>
+      <TestimonialsSection />
+      <CallToAction />
+      <Footer />
     </div>
   )
 }

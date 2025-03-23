@@ -18,29 +18,29 @@ function App() {
 
 	const isEducator = useMatch('/educator')
 
-  return (
-	<div className='bg-white min-h-screen w-full'>
-		{!isEducator && <Navbar/>}
-		<Routes>
-			
-			<Route path='/' element={<Home/>} />
-			<Route path='/course-list' element={<CourseLists/>} />
-			<Route path='/course-list/:input' element={<CourseLists/>} />
-			<Route path='/course/:id' element={<CourseDetails/>} />
-			<Route path='/my-enrollments' element={<MyEnrollments/>} />
-			<Route path='/player/:courseId' element={<Player/>} />
-			<Route path='loading:path' element={<Loading/>} />
+	return (
+		<div className='bg-white min-h-screen w-full'>
+			{!isEducator && <Navbar />}
+			<Routes>
 
-			<Route path='/educator' element={<Educator/>}>
-				<Route path='educator' element={<Dashboard/>} />
-				<Route path='add-course' element={<AddCourse/>} />
-				<Route path='my-course' element={<MyCourses/>} />
-				<Route path='student-enrolled' element={<StudentEnrollments/>} />
-			</Route>
+				<Route path='/' element={<Home />} />
+				<Route path='/course-list' element={<CourseLists />} />
+				<Route path='/course-list/:input' element={<CourseLists />} />
+				<Route path='/course/:id' element={<CourseDetails />} />
+				<Route path='/my-enrollments' element={<MyEnrollments />} />
+				<Route path='/player/:courseId' element={<Player />} />
+				<Route path='loading:path' element={<Loading />} />
 
-		</Routes>
-	</div>
-  )
+				<Route path='/educator' element={<Educator />}>
+					<Route path='educator' element={<Dashboard />} />
+					<Route path='add-course' element={<AddCourse />} />
+					<Route path='my-course' element={<MyCourses />} />
+					<Route path='student-enrolled' element={<StudentEnrollments />} />
+				</Route>
+
+			</Routes>
+		</div>
+	)
 }
 
 export default App
