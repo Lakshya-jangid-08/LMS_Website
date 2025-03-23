@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useData } from '../../Context/AppContextProvider'
 import { useParams } from 'react-router-dom';
 import { assets } from '../../assets/assets';
+import Footer from '../../Components/Student/Footer';
+import humanizeDuration from 'humanize-duration';
+import YouTube from 'react-youtube';
 
 function Player() {
   const { Enrolled, calculateChapterTime } = useData();
@@ -69,10 +72,24 @@ function Player() {
         </div>
 
         {/* right column */}
-        <div>
-
+        <div className='md:mt-10'>
+          {PlayerData ? (
+            <div>
+              <YouTube 
+                videoId={PlayerData.lectureUrl.split('/').pop()} 
+                iframeClassName='w-full aspect-video' 
+              />
+              <div className='flex justify-between items-center mt-1'>
+                <p>{PlayerData.chapter}.{PlayerData.lecture} {PlayerData.lectureTitle}</p>
+                <button className='text-blue-600'>{false ? 'Completed' : 'Mark Complete'}</button>
+              </div>
+            </div>
+          ) : 
+            <img src={courseData ? courseData.courseThumbnail : ''} alt="" />  
+          }
         </div>
       </div>
+      < Footer />
     </>
 
   )
