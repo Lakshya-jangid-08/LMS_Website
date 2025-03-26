@@ -6,7 +6,7 @@ dotenv.config()
 App.use(cors())
 
 App.get('/',(req,res)=>{
-    res.send('i am runing')
+    res.send('Backend running successfully');
 })
 
 module.exports = App;
