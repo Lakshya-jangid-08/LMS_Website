@@ -12,6 +12,7 @@ function Player() {
   const [courseData, setcourseData] = useState(null)
   const [OpenSection, setOpenSection] = useState({})
   const [PlayerData, setPlayerData] = useState(null)
+  const lectureURL = 'https://youtu.be/SAcpESN_Fk4?si=Atod6pujcCigL1eq'
 
   const toggleSection = (index) => {
     setOpenSection((prev) => ({
@@ -76,7 +77,7 @@ function Player() {
           {PlayerData ? (
             <div>
               <YouTube 
-                videoId={PlayerData.lectureUrl.split('/').pop()} 
+                videoId={lectureURL.split('/').pop()} 
                 iframeClassName='w-full aspect-video' 
               />
               <div className='flex justify-between items-center mt-1'>
