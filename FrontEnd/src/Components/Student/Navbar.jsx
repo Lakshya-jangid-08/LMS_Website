@@ -41,7 +41,6 @@ function Navbar() {
             <button onClick={()=>navigate('/educator')} className='text-black'>
               {isEducator ? 'Educator Dashboard ' : 'Become Educator'}</button> |
             <Link className='text-black' to='/my-enrollments'> My Enrollments</Link>
-            <Link to='/my-enrollments'>My Enrollments</Link>
           </>
           }
         </div>
