@@ -1,52 +1,54 @@
-const webHook = require('svix')
-const User = require('../Models/User.Model')
-const config = require('../Config/config')
+import { Webhook } from 'svix';
+import User from '../Models/User.Model.js';
+import { CLERK_WEBHOOK_SECRET } from '../Config/config.js';
 
-export const clerkWebHooks = async (req , res) => {
+export const clerkWebHooks = async (req, res) => {
     try {
-        const Hook = new webHook(config.CLERK_WEBHOOK_SECRET)
-        await Hook.verify(JSON.stringify(req.body),{
-            "svix-id" : req.header["svix-id"],
-            "svix-timestamp" : req.header["svix-timestamp"],
-            "svix-signature" : req.header["svix-signature"]
-        })
+        const Hook = new Webhook(CLERK_WEBHOOK_SECRET);
+        await Hook.verify(JSON.stringify(req.body), {
+            'svix-id': req.headers['svix-id'],
+            'svix-timestamp': req.headers['svix-timestamp'],
+            'svix-signature': req.headers['svix-signature'],
+        });
 
-        const {data, type} = req.body
+        const { data, type } = req.body;
 
-        switch(type) {
-            case 'user.created' : {
+        switch (type) {
+            case 'user.created': {
                 const userData = {
-                    _id : data._id,
-                    email : data.email_addresses[0].email_address,
-                    name : data.first_name + " " + data.last_name,
-                    imageUrl : data.image_url,
-                }
-                await User.create(userData)
-                res.json()
-                break;
-            } 
-
-            case 'user.updated' : {
-                const userData = {
-                    email : data.email_addresses[0].email_address,
-                    name : data.first_name + " " + data.last_name,
-                    imageUrl : data.image_url,
-                }
-                await User.findByIdAndUpdate(data.id, userData)
-                res.json({})
+                    _id: data.id,
+                    email: data.email_addresses[0].email_address,
+                    name: `${data.first_name} ${data.last_name}`,
+                    imageUrl: data.image_url,
+                };
+                await User.create(userData);
+                res.json({ success: true });
                 break;
             }
 
-            case 'user.deleted' : {
-                await User.findByIdAndDelete(data.id)
-                res.json({})
+            case 'user.updated': {
+                const userData = {
+                    email: data.email_addresses[0].email_address,
+                    name: `${data.first_name} ${data.last_name}`,
+                    imageUrl: data.image_url,
+                };
+                await User.findByIdAndUpdate(data.id, userData);
+                res.json({ success: true });
                 break;
             }
-            default :
-                break;
 
+            case 'user.deleted': {
+                await User.findByIdAndDelete(data.id);
+                res.json({ success: true });
+                break;
+            }
+
+            default:
+                res.status(400).json({ success: false, message: 'Unhandled event type' });
+                break;
         }
     } catch (error) {
-        res.json({success : false, message : 'error occuiped'})
+        console.error('Webhook error:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
-}
+};
